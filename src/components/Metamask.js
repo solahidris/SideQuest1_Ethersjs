@@ -1,70 +1,44 @@
 // Metamask.js
 
-import React, { useState, useEffect } from "react";
-import { ethers } from 'ethers';
+// Import everything
+import { ethers, JsonRpcProvider, getBlockNumber } from "ethers";
+
+// Import just a few select items
+// import { BrowserProvider, parseUnits } from "ethers";
+
+// Import from a specific export
+// import { HDNodeWallet } from "ethers/wallet";
 
 const Metamask = () => {
-    const [balance, setBalance] = useState("");
 
-    useEffect(() => {
-        if (window.ethereum) {
-            try {
-                // Request account access
-                window.ethereum.request({ method: 'eth_requestAccounts' });
+  const apikey = process.env.INFURA_API_KEY;
 
-                // Create new provider
-                const provider = new ethers.providers.JsonRpcProvider(window.ethereum);
+  var ethers = require("ethers");
+  var url = `https://mainnet.infura.io/v3/${apikey}`;
+  var customHttpProvider = new ethers.providers.JsonRpcProvider(url);
+  customHttpProvider.getBlockNumber().then((result) => {
+    console.log("Current block number: " + result);
+  });
 
-                // Get account address
-                window.ethereum.request({ method: 'eth_accounts' }).then((accounts) => {
-                    if (accounts.length === 0) {
-                        console.log('No account');
-                    } else {
-                        const address = accounts[0];
-
-                        // Fetch balance
-                        provider.getBalance(address).then((balance) => {
-                            const formattedBalance = ethers.utils.formatEther(balance);
-                            setBalance(formattedBalance);
-                        });
-                    }
-                });
-
-                // Handle accounts changing
-                window.ethereum.on('accountsChanged', (accounts) => {
-                    if (accounts.length === 0) {
-                        console.log('No account');
-                    } else {
-                        const address = accounts[0];
-
-                        // Fetch balance
-                        provider.getBalance(address).then((balance) => {
-                            const formattedBalance = ethers.utils.formatEther(balance);
-                            setBalance(formattedBalance);
-                        });
-                    }
-                });
-
-                // Handle chain changing
-                window.ethereum.on('chainChanged', (chainId) => {
-                    window.location.reload();
-                });
-
-            } catch (error) {
-                // User denied account access...
-                console.error("User denied account access");
-            }
-        } else {
-            console.error("Non-Ethereum browser detected. You should consider trying MetaMask!");
-        }
-    }, []);
-
-    return (
-        <div>
-            <h1>Metamask Balance</h1>
-            <p>{balance}</p>
-        </div>
-    );
+  return (
+    <div>
+      <h1>metamask page</h1>
+    </div>
+  );
 };
 
 export default Metamask;
+
+// Ethers
+// Save the following script to a file, e.g. index.js
+
+// var ethers = require("ethers");
+// var url = "https://mainnet.infura.io/v3/<API-KEY>";
+// var customHttpProvider = new ethers.providers.JsonRpcProvider(url);
+// customHttpProvider.getBlockNumber().then((result) => {
+//   console.log("Current block number: " + result);
+// });
+
+// In a terminal window, run the script with node index.js
+
+// Latest Ethereum Block is  14659509
