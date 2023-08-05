@@ -1,9 +1,9 @@
-import './App.css';
+import Homepage from './components/Homepage';
 
 function App() {
   return (
-    <div className="bg-slate-700 min-h-[100vh]">
-      <p>this is the main branch</p>
+    <div>
+      <Homepage />
     </div>
   );
 }
