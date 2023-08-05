@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 
-
 const Balance = () => {
   // Balance state
   const [balance, setBalance] = useState("");
