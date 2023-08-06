@@ -40,9 +40,8 @@ const Metamask = () => {
   const balanceFn = async () => {
     if (providerRef.current) {
       const provider = providerRef.current;
-      let address = signer.address;
       // Get the current balance of an account (by address or ENS name)
-      const signersBalance = await provider.getBalance(address);
+      const signersBalance = await provider.getBalance(signer.address);
       // Since the balance is in wei, format to display it in ether
       setBalance(formatEther(signersBalance));
     } else {
@@ -53,9 +52,7 @@ const Metamask = () => {
     if (providerRef.current) {
       const provider = providerRef.current;
       // Get the next nonce required to send a transaction
-      const signersTransaction = await provider.getTransactionCount(
-        signer.address
-      );
+      const signersTransaction = await provider.getTransactionCount(signer.address);
       setTransactionCount(signersTransaction);
       // 3
     } else {
@@ -73,7 +70,6 @@ const Metamask = () => {
       blockNumberFn();
       balanceFn();
       transactionCountFn();
-      // console.log(balance)
     }
   }, [signer]);
 
@@ -85,6 +81,8 @@ const Metamask = () => {
         <h3>BlockNumber: {blockNumber}</h3>
         <h3>Balance: {balance?.toString()}</h3>
         <h3>Transaction Count: {transactionCount}</h3>
+        <hr className="my-3"/>
+        <h5 className="tracking-normal leading-4 text-[8px]">This is a simple blockchain app to test connection using EthersJs with Metamask as a Provider</h5>
       </div>
     </div>
   );
